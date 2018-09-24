@@ -1,15 +1,16 @@
+
 public class MyThread extends Thread {
     @Override
     public void run() {
         try {
-            for (int i = 1; i <= 2; i++){
-                System.out.println("Running..." + i);
+            for (int i = 1; i <= 3; i++){
+                System.out.println("Running..." + Thread.currentThread().getName() + "..." + i);
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e){
 
         }
-        System.out.println("Complete...");
+        System.out.println(Thread.currentThread().getName() + " Complete...");
     }
 
     public static void main(String[] args) {
