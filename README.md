@@ -7,3 +7,6 @@
 | 05 | [Exercise_02](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_02) | Maven Project using XChart to create real-time chart based on random number |
 | 06 | [Exercise_03](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_03) | Maven Project using Apache Common Math3 to calculate Sum, Mean, Variance, Standard Deviation by random adding integer |
 | 07 | [Exercise_04](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_04) | Maven Project using PDFBox to read PDF Document for calculate the number of words and characters (Java 8 : Lambda) |
+| 08 | [TestThread_03](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/TestThread_03) | Test Callable Future using ExecutorService |
+| 09 |  |   |
+| 10 |  |   |
