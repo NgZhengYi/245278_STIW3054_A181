@@ -1,24 +1,16 @@
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 public class CallableCountCharacters implements Callable<HashMap<Character, Integer>> {
-    private String path, text;
+    private String text;
 
-    CallableCountCharacters(String path){
-        this.path = path;
+    CallableCountCharacters(String text){
+        this.text = text;
     }
 
     @Override
-    public HashMap<Character, Integer> call() throws Exception {
+    public HashMap<Character, Integer> call() {
         HashMap<Character, Integer> characterHashMap = new HashMap<>();
-
-        extractText();
-
         char[] charsArray = text.toUpperCase().toCharArray();
 
         for (char c : charsArray) {
@@ -30,15 +22,7 @@ public class CallableCountCharacters implements Callable<HashMap<Character, Inte
                 }
             }
         }
-
         return characterHashMap;
     }
 
-    public void extractText() throws IOException {
-        File file = new File(path);
-        PDDocument document = PDDocument.load(file);
-        PDFTextStripper textStripper = new PDFTextStripper();
-        text = textStripper.getText(document);
-        document.close();
-    }
 }

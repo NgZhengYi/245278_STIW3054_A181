@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -7,26 +8,33 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
-    private static ArrayList<String> pathArrayList = new ArrayList<>();
 
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        int threads = Runtime.getRuntime().availableProcessors();
+        ExecutorService executorService = Executors.newFixedThreadPool(threads/2);
         ArrayList<Future<Integer>> futureIntegerArrayList = new ArrayList<>();
         ArrayList<Future<HashMap<Character, Integer>>> futureHashMapArrayList = new ArrayList<>();
 
-        PDFFilePath();
+        // Place all the PDF document in a selected File
+        ReadDocument readDocument = new ReadDocument("D:\\UUM A181\\STIW3054\\Test File");
+        try {
+            readDocument.readPDF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        for (int i = 0; i < pathArrayList.size(); i++) {
-            CallableCountWords callableCountWords = new CallableCountWords(pathArrayList.get(i));
+        for (int i = 0; i < readDocument.getArrayListPDF().size(); i++) {
+            CallableCountWords callableCountWords = new CallableCountWords(readDocument.getArrayListPDF().get(i));
             Future<Integer> futureInteger = executorService.submit(callableCountWords);
             futureIntegerArrayList.add(futureInteger);
 
-            CallableCountCharacters callableCountCharacters = new CallableCountCharacters(pathArrayList.get(i));
+            CallableCountCharacters callableCountCharacters = new CallableCountCharacters(readDocument.getArrayListPDF().get(i));
             Future<HashMap<Character, Integer>> futureHashMap = executorService.submit(callableCountCharacters);
             futureHashMapArrayList.add(futureHashMap);
         }
 
         AtomicInteger totalWords = new AtomicInteger();
+        System.out.println("\n$---------- Total Words for Each Document ----------$");
         futureIntegerArrayList.forEach(future -> {
             try {
                 System.out.println("Document : " + future.get() + " Words");
@@ -63,11 +71,6 @@ public class Main {
         totalCharactersHashMap.forEach((key, value) -> System.out.println(key + " : " + value + " "));
 
         executorService.shutdown();
-    }
-
-    public static void PDFFilePath(){
-        // PDF Document Path
-        //pathArrayList.add("");
     }
 
 }
