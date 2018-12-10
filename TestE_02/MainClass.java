@@ -1,21 +1,14 @@
-import org.apache.commons.math3.stat.descriptive.moment.Mean;
-import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-import org.apache.commons.math3.stat.descriptive.moment.Variance;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainClass {
     private static File[] pdfFile;
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) {
         int processor = Runtime.getRuntime().availableProcessors();
         ExecutorService executorService = Executors.newFixedThreadPool(processor);
         ArrayList<Future<ObjectPDF>> futureArrayList = new ArrayList<>();
@@ -39,44 +32,20 @@ public class MainClass {
             System.out.println();
         }
         */
-        AtomicInteger totalWords = new AtomicInteger();
-        futureArrayList.forEach(future -> {
-            try {
-                totalWords.addAndGet(future.get().getWordsNumber());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        });
-
-        HashMap<Character, Integer> totalCharectersHashMap = new HashMap<>();
-        for (int i = 0; i < futureArrayList.size(); i++) {
-            try {
-                futureArrayList.get(i).get().getCharacterHashMap().forEach((key, value) -> {
-                    totalCharectersHashMap.merge(key, value, Integer::sum);
-                });
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
+        CountWords countWords = new CountWords(futureArrayList);
+        CountCharacters countCharacters = new CountCharacters(futureArrayList);
+        CountCommonsMath countCommonsMath = new CountCommonsMath(futureArrayList);
 
         System.out.println("\n$---------- Total Details ----------$");
         System.out.println("Number of Files : " + pdfFile.length);
-        System.out.println("Total Words : " + totalWords);
+        System.out.println("Total Words : " + countWords.calculateTotalWords());
         System.out.println("Total Characters : ");
-        totalCharectersHashMap.forEach((key, value) -> System.out.print(key + ":" + value + " "));
-
-        Mean mean = new Mean();
-        Variance variance = new Variance();
-        StandardDeviation standardDeviation = new StandardDeviation();
-        double[] mathArray = new double[futureArrayList.size()];
-        for (int j = 0; j < mathArray.length; j++) {
-            mathArray[j] = futureArrayList.get(j).get().getWordsNumber();
-        }
+        countCharacters.charactersHashMap().forEach((key, value) -> System.out.print(key + ":" + value + " "));
 
         System.out.println("\n\n$---------- Commons Math ----------$");
-        System.out.printf("Mean : %.2f", mean.evaluate(mathArray));
-        System.out.printf("%nVariance : %.4f", variance.evaluate(mathArray));
-        System.out.printf("%nStandard Deviation : %.4f", standardDeviation.evaluate(mathArray));
+        System.out.printf("Mean : %.2f", countCommonsMath.countMean());
+        System.out.printf("%nVariance : %.4f", countCommonsMath.countVariance());
+        System.out.printf("%nStandard Deviation : %.4f", countCommonsMath.countSD());
     }
 
     private static void checkDocument(String path) {
