@@ -20,9 +20,10 @@ public class TestPDF implements Callable<ObjectPDF>, TestPDFInterface {
         ObjectPDF objectPDF = new ObjectPDF();
         String text = textScraping();
         int wordsNumber = countWords(text);
-        HashMap<Character, Integer> charactersNumber = countCharacters(text);
+        int charactersNumber = countTotalCharacters(text);
+        HashMap<Character, Integer> charactersHashMap = countCharacters(text);
 
-        objectPDF.setPDFObject(fileName, wordsNumber, charactersNumber);
+        objectPDF.setPDFObject(fileName, wordsNumber, charactersNumber, charactersHashMap);
         return objectPDF;
     }
 
@@ -44,6 +45,12 @@ public class TestPDF implements Callable<ObjectPDF>, TestPDFInterface {
     public int countWords(String text) {
         StringTokenizer tokenizer = new StringTokenizer(text);
         return tokenizer.countTokens();
+    }
+
+    @Override
+    public int countTotalCharacters(String text) {
+        final String totalLetter = text.replaceAll("[^\\p{L}]", "");
+        return totalLetter.length();
     }
 
     @Override

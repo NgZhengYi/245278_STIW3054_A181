@@ -1,5 +1,5 @@
-import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public interface CountCharactersInterface {
-    public HashMap<Character, Integer> charactersHashMap();
+    public AtomicInteger calculateTotalCharacters();
 }

@@ -1,3 +1,4 @@
+import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.moment.Variance;
@@ -39,6 +40,12 @@ public class CountCommonsMath implements CountCommonsMathInterface {
     public double countSD() {
         StandardDeviation standardDeviation = new StandardDeviation();
         return standardDeviation.evaluate(mathArray);
+    }
+
+    @Override
+    public double countNormalDistribution(int totalWords) {
+        NormalDistribution normalDistribution = new NormalDistribution(countMean(), countSD());
+        return normalDistribution.cumulativeProbability(totalWords);
     }
 
 }
