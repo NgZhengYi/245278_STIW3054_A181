@@ -9,6 +9,6 @@
 | 07 | [Exercise_04](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_04) | Maven Project using PDFBox to read PDF Document for calculate the number of words and characters (Java 8 : Lambda) |
 | 08 | [TestThread_03](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/TestThread_03) | Test Callable Future using ExecutorService |
 | 09 | [TestE_01](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/TestE_01) | An enhancement based on **[Exercise_04](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_04)** on reading multiple PDF Document using ExecutorService, Callable, Future, ArrayList Object, AtomicInteger |
-| 10 | [TestE_02]((https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/TestE_02) | A further uppdate on **[Exercise_04](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_04)**  |
+| 10 | [TestE_02](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/TestE_02) | A further uppdate on **[Exercise_04](https://github.com/NgZhengYi/245278_STIW3054_A181/tree/master/Exercise_04)**  |
 | 11 |  |   |
 | 12 |  |   |
