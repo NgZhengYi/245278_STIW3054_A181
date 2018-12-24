@@ -1,26 +1,17 @@
-import org.apache.commons.math3.distribution.NormalDistribution;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.apache.commons.math3.stat.descriptive.moment.Variance;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class CountCommonsMath implements CountCommonsMathInterface {
-    private ArrayList<Future<ObjectPDF>> objectPDFArrayList;
-    double[] mathArray;
+    private double[] mathArray;
 
-    CountCommonsMath(ArrayList<Future<ObjectPDF>> oobjectPDFArrayList) {
-        this.objectPDFArrayList = oobjectPDFArrayList;
+    CountCommonsMath(ArrayList<Integer> integerArrayList) {
 
-        mathArray = new double[objectPDFArrayList.size()];
-        for (int j = 0; j < mathArray.length; j++) {
-            try {
-                mathArray[j] = objectPDFArrayList.get(j).get().getWordsNumber();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+        mathArray = new double[integerArrayList.size()];
+        for (int i = 0; i < mathArray.length; i++) {
+            mathArray[i] = integerArrayList.get(i);
         }
     }
 
@@ -40,12 +31,6 @@ public class CountCommonsMath implements CountCommonsMathInterface {
     public double countSD() {
         StandardDeviation standardDeviation = new StandardDeviation();
         return standardDeviation.evaluate(mathArray);
-    }
-
-    @Override
-    public double countNormalDistribution(int totalWords) {
-        NormalDistribution normalDistribution = new NormalDistribution(countMean(), countSD());
-        return normalDistribution.cumulativeProbability(totalWords);
     }
 
 }
