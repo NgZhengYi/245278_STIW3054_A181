@@ -1,5 +1,7 @@
 package TestExam_A172;
-
+/*
+    A172 Exam Section B Question 2 (15 marks)
+ */
 public class MultiplicationTable {
 
     public static void main(String[] args) {
